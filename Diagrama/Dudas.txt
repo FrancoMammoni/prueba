@@ -1,0 +1,3 @@
+	+ Patron builder para mapas y niveles?
+	+ Patron state ---> Estrella en estado?
+	+ 
