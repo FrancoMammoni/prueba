@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class PantallaJuego extends JPanel implements Runnable{
 	
-	protected Image fondo, marito;
+	protected Image fondo, marito, luisito;
 	
 	
 	// Configuraciones de la pantalla:
@@ -38,6 +38,8 @@ public class PantallaJuego extends JPanel implements Runnable{
 	// Posicion Default del pj, la posicion X:0 Y:0 es en la esquina izq del panel
 	int jugadorPosX = 100;
 	int jugadorPosY = 450;
+	int jugadorPosX2 = 200;
+	int jugadorPosY2 = 450;
 	int velocidadJugador = 5; // Cada vez q se mueva se mueve 5 pixeles hacia la direccion que se mueve
 	
 	// Efepeeses (FPS)
@@ -45,8 +47,9 @@ public class PantallaJuego extends JPanel implements Runnable{
 	
 	public PantallaJuego() {
 		try {
-            fondo = ImageIO.read(new File("recursos/imagenFondo.png")); // Asegúrate de que la ruta es correcta
+            fondo = ImageIO.read(new File("recursos/imagenFondo.jpg")); // Asegúrate de que la ruta es correcta
             marito = ImageIO.read(new File("recursos/marito.png"));
+            luisito = ImageIO.read(new File("recursos/luisito.png"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -116,8 +119,20 @@ public class PantallaJuego extends JPanel implements Runnable{
 		if(this.lectorInput.arriba && this.lectorInput.derecha) {
 			this.jugadorPosX += this.velocidadJugador;
 			this.jugadorPosY -= this.velocidadJugador;
-		} else 
-		if(this.lectorInput.arriba == true) {
+			
+		} else if(this.lectorInput.arriba && this.lectorInput.izquierda) {
+			this.jugadorPosX -= this.velocidadJugador;
+			this.jugadorPosY -= this.velocidadJugador;
+			
+		} else if(this.lectorInput.abajo && this.lectorInput.izquierda) {
+			this.jugadorPosX -= this.velocidadJugador;
+			this.jugadorPosY += this.velocidadJugador;
+			
+		} else if(this.lectorInput.abajo && this.lectorInput.derecha) {
+			this.jugadorPosX += this.velocidadJugador;
+			this.jugadorPosY += this.velocidadJugador;
+			
+		} else if(this.lectorInput.arriba == true) {
 			this.jugadorPosY -= this.velocidadJugador;
 			
 		} else if(this.lectorInput.abajo) {
@@ -129,10 +144,41 @@ public class PantallaJuego extends JPanel implements Runnable{
 		} else if(this.lectorInput.derecha) {
 			this.jugadorPosX += this.velocidadJugador;
 		}
+		
+		
+		
+		if(this.lectorInput.arriba2 && this.lectorInput.derecha2) {
+			this.jugadorPosX2 += this.velocidadJugador;
+			this.jugadorPosY2 -= this.velocidadJugador;
+			
+		} else if(this.lectorInput.arriba2 && this.lectorInput.izquierda2) {
+			this.jugadorPosX2 -= this.velocidadJugador;
+			this.jugadorPosY2 -= this.velocidadJugador;
+			
+		} else if(this.lectorInput.abajo2 && this.lectorInput.izquierda2) {
+			this.jugadorPosX2 -= this.velocidadJugador;
+			this.jugadorPosY2 += this.velocidadJugador;
+			
+		} else if(this.lectorInput.abajo2 && this.lectorInput.derecha2) {
+			this.jugadorPosX2 += this.velocidadJugador;
+			this.jugadorPosY2 += this.velocidadJugador;
+			
+		} else if(this.lectorInput.arriba2 == true) {
+			this.jugadorPosY2 -= this.velocidadJugador;
+			
+		} else if(this.lectorInput.abajo2) {
+			this.jugadorPosY2 += this.velocidadJugador;
+			
+		} else if(this.lectorInput.izquierda2) {
+			this.jugadorPosX2 -= this.velocidadJugador;
+			
+		} else if(this.lectorInput.derecha2) {
+			this.jugadorPosX2 += this.velocidadJugador;
+		}
 	}
 	
 	public void paintComponent(Graphics grafico) { // La clase graphic es como nuestro "pincel"
-		super.paintComponent(grafico); // Pq PantallaJuego es hija de JPanel
+		super.paintComponent(grafico); 			   // Pq PantallaJuego es hija de JPanel
 		
 		Graphics2D grafico2d = (Graphics2D) grafico; // Las clases son similares, pero la 2d es mejor para lo q estamos haciendo, tiene mas funciones
 		if(fondo != null) {
@@ -140,6 +186,7 @@ public class PantallaJuego extends JPanel implements Runnable{
 		}
 		if(marito != null) {
 			grafico2d.drawImage(marito, this.jugadorPosX, this.jugadorPosY, this.tamanioBaldoza, this.tamanioBaldoza, this);
+			grafico2d.drawImage(luisito, this.jugadorPosX2, this.jugadorPosY2, this.tamanioBaldoza - 20, this.tamanioBaldoza - 12, this);
 		}
 		grafico2d.dispose(); // mejora el uso de memoria, es como q borra buffer
 	}

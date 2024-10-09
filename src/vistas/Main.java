@@ -18,7 +18,5 @@ public class Main {
 		ventana.pack(); // Hace que el frame se transforme/acomode al tamanio del panel (y de todos los componentes que tenga aniadidos)
 		
 		pantalla.arrancarHiloJuego();
-		
-		
 	}
 }
